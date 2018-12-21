@@ -1,7 +1,20 @@
 import os, re
 
-
 def parseDirs(baseDir, searchPattern):
+    """
+    :param baseDir: list of base directory
+    :param searchPattern: str of re pattern
+    :return: list of directories of files in baseDir which satisfies searchPattern
+
+    Examples
+    --------
+    >>> DIR = ['../data/ace_2005_td_v7/data/Chinese/bn/adj',
+        '../data/ace_2005_td_v7/data/Chinese/nw/adj',
+        '../data/ace_2005_td_v7/data/Chinese/wl/adj']
+    >>> search_pattern = '.apf.xml'
+    >>> files_dir = parseDirs(DIR, search_pattern)
+
+    """
     search_pattern = re.compile(searchPattern)
     files_dir = []
     for dir in baseDir:
@@ -12,5 +25,11 @@ def parseDirs(baseDir, searchPattern):
 
 
 def loadStopWords(filePath):
+    """
+    :param filePath: file path of stopwords
+    :return: set of stopwords
+
+    """
+
     with open(filePath, 'r', encoding='utf-8-sig') as f:
         return set([line.strip() for line in f])
