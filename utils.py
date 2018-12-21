@@ -6,8 +6,8 @@ def parseDirs(baseDir, searchPattern):
     :param searchPattern: str of re pattern
     :return: list of directories of files in baseDir which satisfies searchPattern
 
-    Examples
-    --------
+    examples:
+
     >>> DIR = ['../data/ace_2005_td_v7/data/Chinese/bn/adj',
         '../data/ace_2005_td_v7/data/Chinese/nw/adj',
         '../data/ace_2005_td_v7/data/Chinese/wl/adj']
