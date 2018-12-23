@@ -5,6 +5,7 @@ savePath = '../processed_data/combination.xml'
 DIR = ['../data/ace_2005_td_v7/data/Chinese/bn/adj',
        '../data/ace_2005_td_v7/data/Chinese/nw/adj',
        '../data/ace_2005_td_v7/data/Chinese/wl/adj']
+
 searchPattern = '.apf.xml'
 file_dir = parseDirs(DIR, searchPattern)
 
