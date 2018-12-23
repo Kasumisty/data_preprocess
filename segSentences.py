@@ -1,6 +1,8 @@
 import re
 import jieba
 import pickle
+import operator
+from functools import reduce
 from bs4 import BeautifulSoup
 from my_code.utils import parseDirs, loadStopWords
 
@@ -25,14 +27,23 @@ for one in files_dir:
 
     for type in types:
         if type in one:
-            sentence = ''.join([element.get_text().replace('\n', '').replace(' ', '')
-                                for element in soup.find_all(tags[type])])
-    seg_sentence = []
-    seg_words = list(jieba.cut(sentence))
-    for seg in seg_words:
-        if seg not in stopWords and len(seg) > 1 and not re.search(r'\d+\.?\d*', seg):
-            seg_sentence.append(seg)
-    seg_sentences.append(seg_sentence)
+            # sentence = ''.join([element.get_text().replace('\n', '').replace(' ', '')
+            #                     for element in soup.find_all(tags[type])])
+            setences = reduce(operator.add,
+                              [re.split(r'[。？；！]', element.get_text().replace('\n', '').replace(' ', ''))
+                               for element in soup.find_all(tags[type])])
+    for sentence in setences:
+        seg_sentence = []
+        seg_words = list(jieba.cut(sentence))
+        for seg in seg_words:
+            if seg not in stopWords and len(seg) > 1 and not re.search(r'\d+\.?\d*', seg):
+                seg_sentence.append(seg)
+        if seg_sentence:
+            seg_sentences.append(seg_sentence)
+
 
 with open(SAVE_PATH, 'wb') as f:
     pickle.dump(seg_sentences, f)
+
+# for i in range(20):
+#     print(seg_sentences[i])
