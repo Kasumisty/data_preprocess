@@ -15,6 +15,7 @@ def parseDirs(baseDir, searchPattern):
     >>> files_dir = parseDirs(DIR, search_pattern)
 
     """
+
     search_pattern = re.compile(searchPattern)
     files_dir = []
     for dir in baseDir:
