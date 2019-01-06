@@ -1,3 +1,4 @@
+import os
 from bs4 import BeautifulSoup
 from my_code.utils import parseDirs
 
@@ -8,24 +9,14 @@ DIR = ['../data/ace_2005_td_v7/data/Chinese/bn/adj',
        '../data/ace_2005_td_v7/data/Chinese/wl/adj']
 searchPattern = '.apf.xml'
 
-
 def getErrFiles(file):
     with open(file, 'r') as f:
         return [line.strip() for line in f if line.startswith('.')]
 
-
 file_dir = set(parseDirs(DIR, searchPattern))
 efiles = set(getErrFiles(err_files_dir))
 
-# print(efiles)
-# print('../data/ace_2005_td_v7/data/Chinese/bn/adj/CNR20001121.1700.1232.apf.xml' in file_dir)
-# exit()
-# print(len(file_dir))
-
 file_dir = file_dir - efiles
-
-# print(len(file_dir))
-# exit()
 
 fullData = '<?xml version="1.0"?>\n<document>\n'
 for one in file_dir:
@@ -33,7 +24,10 @@ for one in file_dir:
         soup = BeautifulSoup(f.read(), 'lxml')
     events = soup.find_all('event')
     tmp = ''.join([str(event.prettify()) for event in events])
+    base = os.path.basename(one)
+    fullData += '<doc id=' + os.path.splitext(os.path.splitext(base)[0])[0] + '>\n'
     fullData += tmp
+    fullData += '</doc>'
 fullData += '</document>'
 
 with open(savePath, 'w') as f:

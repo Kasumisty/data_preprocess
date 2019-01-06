@@ -124,26 +124,146 @@
 # for s in seg:
 #     print(s)
 
-file = '../processed_data/predata_one_mention.txt'
-with open(file, 'r', encoding='utf-8') as f:
-    data = f.readlines()
 
+# # try to find whether each sentebnce has a trigger
+# file = '../processed_data/predata.txt'
+# with open(file, 'r', encoding='utf-8') as f:
+#     data = f.readlines()
+#
+# tag = 1
+# count = 0
+# all = 0
 # for line in data:
 #     if line == '\n':
-#         print('true')
+#         # print('true')
+#         all += 1
+#         if tag:
+#             print('err')
+#             count += 1
+#         tag = 1
+#     if len(line.split('\t')) > 1:
+#         tag = 0
+# print(count)
+# print(all)
+
+
+import numpy as np
+import tensorflow as tf
+
+x = np.array([1, 6, 2, 7, 3, 8, 4, 9, 5, 10, 1, 6, 2, 7, 3, 8, 4, 9, 5, 10, 1, 6, 2, 7, 3, 8, 4, 9, 5, 10]).reshape(
+    [3, 5, 1, 2])
+# print(x)
+X = tf.placeholder(tf.float32, shape=[3, 5, 1, 2])
+s = tf.unstack(x, axis=0)
+g = tf.unstack(s[0], axis=1)
+k = tf.unstack(g[0], axis=1)
+with tf.Session() as sess:
+    o1 = sess.run(s)
+    print(o1[0])
+
+    o2 = sess.run(g)
+    print(o2[0])
+
+    o3 = sess.run(k)
+    print(o3)
+    # o3 =
+# print(x[0,:,:,0])
+# print()
+# print(x[0,:,:,1])
+# print()
+
+# print(x)
+# print()
 # exit()
-tag = 1
-count = 0
-all = 0
-for line in data:
-    if line == '\n':
-        # print('true')
-        all += 1
-        if tag:
-            print('err')
-            count += 1
-        tag = 1
-    if len(line.split('\t')) > 1:
-        tag = 0
-print(count)
-print(all)
+
+# X = tf.placeholder(tf.float32, shape=[3,5,1,2])
+# def pooling(X):
+#     s = np.array([]).astype(np.float32)
+#     # return tf.reduce_max(X[0, :3, 0, 0])
+#     for i in range(X.shape[0]):
+#         for j in range(X.shape[-1]):
+#             s = tf.concat([ s, [tf.reduce_max(X[i, :3, 0, j])] ], axis=0)
+#         for j in range(X.shape[-1]):
+#             s = tf.concat([ s, [tf.reduce_max(X[i, 3:5, 0, j])] ], axis=0)
+#     return tf.reshape(s, [3,2,1,2])
+#
+# def f(Y):
+#     s = np.array([])
+#     for i in range(Y.shape[0]):
+#         s = tf.concat([s, Y[i, :, 0, 0], Y[i, :, 0, 1]], axis=0)
+#     return tf.reshape(s, [Y.shape[0], 4, 1, 1])
+#
+# conv = tf.layers.conv2d(X, 2, kernel_size=[2,2], padding='same')
+# pool = pooling(conv)
+# dmpool = f(pool)
+#
+# with tf.Session() as sess:
+#     sess.run(tf.global_variables_initializer())
+#     o = sess.run(pool, feed_dict={X: x})
+#     print(o.shape)
+
+
+# def f(Y):
+#     data = np.array([])
+#     for i in range(3):
+#         s = np.concatenate([Y[i, :, 0, 0], Y[i, :, 0, 1]], axis=0)
+#         print(s)
+#         data = np.append(data, s)
+#     data = data.reshape([3, 4, 1, 1])
+#     return data
+#     # print(data[0, :, 0, 0])
+#
+# o = f(Y)
+
+
+# data = np.array([])
+# for i in range(3):
+#     s = np.concatenate([Y[i, :, 0, 0], Y[i, :, 0, 1]], axis=0)
+#     print(s)
+#     data = np.append(data, s)
+# data = data.reshape([3,4,1,1])
+# print(data[0, :,0,0])
+
+
+# def maxpool(x):
+#     data = []
+#     for i in range(x.shape[0]):
+#         for j in range(x.shape[-1]):
+#             # tf.concat([x[i, 0:3, :, j]])
+#             data.append(x[i, 0:3, :, j])
+#     tf.reshape(data, [3, 4, 1])
+
+# s = maxpool(x)
+
+
+# c = [[[[ 1,  2]]
+#
+#   [[ 3,  4]]
+#
+#   [[ 5,  6]]
+#
+#   [[ 7,  8]]
+#
+#   [[ 9, 10]]]
+#
+#
+#  [[[ 1,  2]]
+#
+#   [[ 3,  4]]
+#
+#   [[ 5,  6]]
+#
+#   [[ 7,  8]]
+#
+#   [[ 9, 10]]]
+#
+#
+#  [[[ 1 , 2]]
+#
+#   [[ 3,  4]]
+#
+#   [[ 5 , 6]]
+#
+#   [[ 7,  8]]
+#
+#   [[ 9 ,10]]]]
