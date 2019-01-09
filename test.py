@@ -147,25 +147,27 @@
 # print(all)
 
 
-import numpy as np
-import tensorflow as tf
+# import numpy as np
+# import tensorflow as tf
+#
+# x = np.array([1, 6, 2, 7, 3, 8, 4, 9, 5, 10, 1, 6, 2, 7, 3, 8, 4, 9, 5, 10, 1, 6, 2, 7, 3, 8, 4, 9, 5, 10]).reshape(
+#     [3, 5, 1, 2])
+# # print(x)
+# X = tf.placeholder(tf.float32, shape=[3, 5, 1, 2])
+# s = tf.unstack(x, axis=0)
+# g = tf.unstack(s[0], axis=1)
+# k = tf.unstack(g[0], axis=1)
+# with tf.Session() as sess:
+#     o1 = sess.run(s)
+#     print(o1[0])
+#
+#     o2 = sess.run(g)
+#     print(o2[0])
+#
+#     o3 = sess.run(k)
+#     print(o3)
 
-x = np.array([1, 6, 2, 7, 3, 8, 4, 9, 5, 10, 1, 6, 2, 7, 3, 8, 4, 9, 5, 10, 1, 6, 2, 7, 3, 8, 4, 9, 5, 10]).reshape(
-    [3, 5, 1, 2])
-# print(x)
-X = tf.placeholder(tf.float32, shape=[3, 5, 1, 2])
-s = tf.unstack(x, axis=0)
-g = tf.unstack(s[0], axis=1)
-k = tf.unstack(g[0], axis=1)
-with tf.Session() as sess:
-    o1 = sess.run(s)
-    print(o1[0])
 
-    o2 = sess.run(g)
-    print(o2[0])
-
-    o3 = sess.run(k)
-    print(o3)
     # o3 =
 # print(x[0,:,:,0])
 # print()
@@ -267,3 +269,157 @@ with tf.Session() as sess:
 #   [[ 7,  8]]
 #
 #   [[ 9 ,10]]]]
+
+
+# file_path = '../processed_data/predata.txt'
+# maxlen = 0
+# with open(file_path, 'r') as f:
+#     count = 0
+#     for line in f:
+#         if line.startswith('i'):
+#             continue
+#         if line == '\n':
+#             if count > maxlen:
+#                 maxlen = count
+#             count = 0
+#             continue
+#         count += 1
+# print(maxlen)
+
+
+# from gensim.models import Word2Vec
+# model = Word2Vec.load('../data/zh/zh.bin')
+# a = model.similarity('中国', '台湾')
+# b = model.similarity('总统', '主席')
+# c = model.most_similar('中国', topn=20)
+# d = model.most_similar('总统', topn=20)
+# print(a)
+# print(b)
+# print(c)
+# print(d)
+
+
+# polyglot tutorial
+# import pickle
+# with open('../data/zh/polyglot-en.pkl', 'rb') as f:
+#     words, embeddings = pickle.load(f, encoding='iso-8859-1')
+# print("Emebddings shape is {}".format(embeddings.shape))
+#
+# """KNN Example."""
+#
+# from operator import itemgetter
+# from itertools import islice
+# import re
+# import numpy
+#
+# # Special tokens
+# Token_ID = {"<UNK>": 0, "<S>": 1, "</S>":2, "<PAD>": 3}
+# ID_Token = {v:k for k,v in Token_ID.items()}
+#
+# # Map words to indices and vice versa
+# word_id = {w:i for (i, w) in enumerate(words)}
+# id_word = dict(enumerate(words))
+#
+# # Noramlize digits by replacing them with #
+# DIGITS = re.compile("[0-9]", re.UNICODE)
+#
+# # Number of neighbors to return.
+# k = 5
+#
+#
+# def case_normalizer(word, dictionary):
+#   """ In case the word is not available in the vocabulary,
+#      we can try multiple case normalizing procedure.
+#      We consider the best substitute to be the one with the lowest index,
+#      which is equivalent to the most frequent alternative."""
+#   w = word
+#   lower = (dictionary.get(w.lower(), 1e12), w.lower())
+#   upper = (dictionary.get(w.upper(), 1e12), w.upper())
+#   title = (dictionary.get(w.title(), 1e12), w.title())
+#   results = [lower, upper, title]
+#   results.sort()
+#   index, w = results[0]
+#   if index != 1e12:
+#     return w
+#   return word
+#
+#
+# def normalize(word, word_id):
+#     """ Find the closest alternative in case the word is OOV."""
+#     if not word in word_id:
+#         word = DIGITS.sub("#", word)
+#     if not word in word_id:
+#         word = case_normalizer(word, word_id)
+#
+#     if not word in word_id:
+#         return None
+#     return word
+#
+#
+# def l2_nearest(embeddings, word_index, k):
+#     """Sorts words according to their Euclidean distance.
+#        To use cosine distance, embeddings has to be normalized so that their l2 norm is 1."""
+#
+#     e = embeddings[word_index]
+#     distances = (((embeddings - e) ** 2).sum(axis=1) ** 0.5)
+#     sorted_distances = sorted(enumerate(distances), key=itemgetter(1))
+#     return zip(*sorted_distances[:k])
+#
+#
+# def knn(word, embeddings, word_id, id_word):
+#     word = normalize(word, word_id)
+#     if not word:
+#         print("OOV word")
+#         return
+#     word_index = word_id[word]
+#     indices, distances = l2_nearest(embeddings, word_index, k)
+#     neighbors = [id_word[idx] for idx in indices]
+#     for i, (word, distance) in enumerate(zip(neighbors, distances)):
+#       print(i, '\t', word, '\t\t', distance)
+#
+# knn("Jordan", embeddings, word_id, id_word)
+# print()
+# knn("1986", embeddings, word_id, id_word)
+# print()
+# knn("JAPAN", embeddings, word_id, id_word)
+
+
+# # -*- coding: utf-8 -*-
+# from sklearn.preprocessing import LabelEncoder
+# le = LabelEncoder().fit([1,111,122,188,999])
+# le_transform = le.transform([1,122,111])
+# print(le_transform)
+
+
+# import pandas as pd
+# from sklearn import  preprocessing
+#
+# test=pd.DataFrame({'city':['beijing','shanghai','shenzhen'],'age':[21,33,23],'target':[0,1,0]})
+#
+# label = preprocessing.LabelEncoder()
+# test['city']= label.fit_transform(test['city'])
+# print(test)
+#
+# enc=preprocessing.OneHotEncoder(categorical_features=[1], sparse=False)
+# test=enc.fit_transform(test)
+# print(test)
+#
+# # print(pd.factorize(test['city']))
+#
+# print(pd.get_dummies(test['city'],prefix='city'))
+
+
+# s = '爱一个人 如何厮守到老 怎样面对一切 我不知道'
+# print(s.replace(' ', ''))
+
+# for i, w in enumerate(s):
+#     print(i, w)
+
+
+# l = list(s)
+# print(l)
+
+import jieba
+
+s = '送医不治'
+print(list(jieba.cut(s)))

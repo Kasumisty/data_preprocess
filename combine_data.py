@@ -23,11 +23,13 @@ for one in file_dir:
     with open(one, 'r') as f:
         soup = BeautifulSoup(f.read(), 'lxml')
     events = soup.find_all('event')
+    if not events:
+        continue
     tmp = ''.join([str(event.prettify()) for event in events])
     base = os.path.basename(one)
     fullData += '<doc id=' + os.path.splitext(os.path.splitext(base)[0])[0] + '>\n'
     fullData += tmp
-    fullData += '</doc>'
+    fullData += '</doc>\n'
 fullData += '</document>'
 
 with open(savePath, 'w') as f:
