@@ -9,7 +9,6 @@ count = 0
 all = 0
 
 l = []
-
 for line in data:
     l.append(line.strip())
     if line == '\n':

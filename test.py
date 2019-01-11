@@ -419,7 +419,11 @@
 # l = list(s)
 # print(l)
 
-import jieba
+import numpy as np
 
-s = '送医不治'
-print(list(jieba.cut(s)))
+#
+a = np.array([])
+a[0] = [1, 2, 3]
+b = np.array([4, 5, 6])
+x = np.stack([a, b], axis=0)
+print(x)
